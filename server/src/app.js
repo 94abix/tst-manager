@@ -132,6 +132,10 @@ async function startServer() {
     console.log('[Server] Exécution des migrations...');
     await require('../database/migrate').runMigrations();
 
+    // Exécuter le seed si la base est vide (premier démarrage)
+    console.log('[Server] Vérification des données initiales...');
+    await require('../database/seed').runSeed();
+
     // Démarrer le serveur / Start server
     app.listen(PORT, () => {
       console.log('');

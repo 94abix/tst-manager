@@ -16,15 +16,16 @@ const { v4: uuidv4 } = require('uuid');
 /**
  * Exécute le seed de la base de données
  * Run database seeding
+ * @param {boolean} standalone - Si true, initialise la DB (appel direct). Si false, utilise la DB existante.
  */
-async function runSeed() {
+async function runSeed(standalone = false) {
   console.log('[Seed] Initialisation...');
 
-  // Initialiser la base de données
-  await initDatabase();
-
-  // Exécuter les migrations
-  runMigrations();
+  // Initialiser la base de données seulement si appelé directement
+  if (standalone) {
+    await initDatabase();
+    runMigrations();
+  }
 
   const db = getDatabase();
 
@@ -172,7 +173,7 @@ async function runSeed() {
 
 // Exécuter le seed si appelé directement
 if (require.main === module) {
-  runSeed().catch(console.error);
+  runSeed(true).catch(console.error);
 }
 
 module.exports = { runSeed };

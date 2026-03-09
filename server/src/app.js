@@ -134,7 +134,7 @@ async function startServer() {
 
     // Exécuter le seed si la base est vide (premier démarrage)
     console.log('[Server] Vérification des données initiales...');
-    await require('../database/seed').runSeed();
+    await require('../database/seed').runSeed(false);
 
     // Démarrer le serveur / Start server
     app.listen(PORT, () => {

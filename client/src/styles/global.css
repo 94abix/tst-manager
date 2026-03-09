@@ -1,0 +1,295 @@
+/**
+ * Styles globaux de l'application
+ * Global Application Styles
+ *
+ * @author Renault Group - Service 00596
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   STYLES DE BASE
+   ============================================ */
+
+:root {
+  --renault-yellow: #FFCC00;
+  --renault-yellow-dark: #E6B800;
+  --renault-black: #000000;
+}
+
+body {
+  @apply bg-gray-50 text-gray-900 font-sans antialiased;
+  min-height: 100vh;
+}
+
+/* ============================================
+   COMPOSANTS PERSONNALISÉS
+   ============================================ */
+
+@layer components {
+  /* Boutons */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply btn bg-renault-yellow text-black hover:bg-renault-yellow-dark focus:ring-renault-yellow;
+  }
+
+  .btn-secondary {
+    @apply btn bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400;
+  }
+
+  .btn-danger {
+    @apply btn bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+  }
+
+  .btn-success {
+    @apply btn bg-green-600 text-white hover:bg-green-700 focus:ring-green-500;
+  }
+
+  .btn-outline {
+    @apply btn border-2 border-gray-300 bg-transparent hover:bg-gray-100 focus:ring-gray-400;
+  }
+
+  .btn-sm {
+    @apply text-sm px-3 py-1.5;
+  }
+
+  .btn-lg {
+    @apply text-lg px-6 py-3;
+  }
+
+  /* Champs de formulaire */
+  .form-input {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-renault-yellow focus:border-renault-yellow transition-colors duration-200 bg-white;
+  }
+
+  .form-input:disabled {
+    @apply bg-gray-100 cursor-not-allowed;
+  }
+
+  .form-input.error {
+    @apply border-red-500 focus:ring-red-500 focus:border-red-500;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 mb-1;
+  }
+
+  .form-error {
+    @apply text-sm text-red-600 mt-1;
+  }
+
+  .form-helper {
+    @apply text-sm text-gray-500 mt-1;
+  }
+
+  /* Cartes */
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden;
+  }
+
+  .card-header {
+    @apply px-6 py-4 border-b border-gray-200 bg-gray-50;
+  }
+
+  .card-body {
+    @apply p-6;
+  }
+
+  .card-footer {
+    @apply px-6 py-4 border-t border-gray-200 bg-gray-50;
+  }
+
+  /* Badges de statut */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-brouillon {
+    @apply badge bg-gray-100 text-gray-800;
+  }
+
+  .badge-en_cours {
+    @apply badge bg-yellow-100 text-yellow-800;
+  }
+
+  .badge-valide {
+    @apply badge bg-green-100 text-green-800;
+  }
+
+  .badge-archive {
+    @apply badge bg-blue-100 text-blue-800;
+  }
+
+  /* Tables */
+  .table {
+    @apply w-full text-sm text-left;
+  }
+
+  .table thead {
+    @apply bg-gray-50 text-gray-600 uppercase text-xs tracking-wider;
+  }
+
+  .table th {
+    @apply px-6 py-3 font-semibold;
+  }
+
+  .table td {
+    @apply px-6 py-4 border-t border-gray-200;
+  }
+
+  .table tbody tr:hover {
+    @apply bg-gray-50;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    @apply fixed left-0 top-0 h-full w-64 bg-gray-900 text-white shadow-xl z-40;
+  }
+
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition-colors duration-200;
+  }
+
+  .sidebar-item.active {
+    @apply bg-renault-yellow text-black font-medium;
+  }
+
+  /* Header */
+  .header {
+    @apply fixed top-0 right-0 left-64 h-16 bg-white border-b border-gray-200 shadow-sm z-30;
+  }
+
+  /* Contenu principal */
+  .main-content {
+    @apply ml-64 pt-16 min-h-screen;
+  }
+
+  /* Modales */
+  .modal-overlay {
+    @apply fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4;
+  }
+
+  .modal {
+    @apply bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-auto;
+  }
+
+  .modal-header {
+    @apply px-6 py-4 border-b border-gray-200 flex items-center justify-between;
+  }
+
+  .modal-body {
+    @apply p-6;
+  }
+
+  .modal-footer {
+    @apply px-6 py-4 border-t border-gray-200 flex justify-end gap-3;
+  }
+}
+
+/* ============================================
+   UTILITAIRES PERSONNALISÉS
+   ============================================ */
+
+@layer utilities {
+  .text-renault {
+    color: var(--renault-yellow);
+  }
+
+  .bg-renault {
+    background-color: var(--renault-yellow);
+  }
+
+  .border-renault {
+    border-color: var(--renault-yellow);
+  }
+
+  /* Scrollbar personnalisée */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-gray-100 rounded;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded hover:bg-gray-400;
+  }
+
+  /* Animation de chargement */
+  .loading-spinner {
+    @apply animate-spin rounded-full border-4 border-gray-200 border-t-renault-yellow;
+  }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* ============================================
+   SIGNATURES
+   ============================================ */
+
+.signature-pad {
+  @apply border-2 border-dashed border-gray-300 rounded-lg bg-white cursor-crosshair;
+}
+
+.signature-pad:hover {
+  @apply border-renault-yellow;
+}
+
+/* ============================================
+   IMPRESSION
+   ============================================ */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .sidebar,
+  .header {
+    display: none !important;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+    padding-top: 0 !important;
+  }
+}

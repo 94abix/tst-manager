@@ -14,7 +14,9 @@
     "db:seed": "cd server && npm run db:seed",
     "test": "npm run test:server && npm run test:client",
     "test:server": "cd server && npm test",
-    "test:client": "cd client && npm test"
+    "test:client": "cd client && npm test",
+    "build": "cd client && npm install && npm run build && cd ../server && npm install",
+    "start": "cd server && node src/app.js"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

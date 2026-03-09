@@ -34,7 +34,9 @@ app.use(helmet({
 
 // CORS - Autoriser le frontend / CORS - Allow frontend
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: process.env.NODE_ENV === 'production'
+    ? true  // En production, le frontend est servi par le même serveur
+    : (process.env.FRONTEND_URL || 'http://localhost:5173'),
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -53,31 +55,45 @@ if (process.env.NODE_ENV !== 'test') {
 // ROUTES
 // ============================================
 
-// Route racine / Root route
-app.get('/', (req, res) => {
-  res.json({
-    success: true,
-    message: 'TST Manager API - Renault Group',
-    version: '1.0.0',
-    documentation: '/api/health'
-  });
-});
-
 // Routes API / API routes
 app.use('/api', routes);
 
 // ============================================
-// GESTION DES ERREURS / ERROR HANDLING
+// FRONTEND STATIQUE (Production)
 // ============================================
 
-// Erreur 404 globale / Global 404 error
-app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    error: 'NOT_FOUND',
-    message: 'Ressource non trouvée'
+if (process.env.NODE_ENV === 'production') {
+  // Servir les fichiers statiques du frontend buildé
+  app.use(express.static(path.join(__dirname, '../../client/dist')));
+
+  // Toutes les autres routes renvoient vers index.html (SPA React)
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
   });
-});
+} else {
+  // Route racine en développement
+  app.get('/', (req, res) => {
+    res.json({
+      success: true,
+      message: 'TST Manager API - Renault Group',
+      version: '1.0.0',
+      documentation: '/api/health'
+    });
+  });
+
+  // Erreur 404 en développement
+  app.use((req, res) => {
+    res.status(404).json({
+      success: false,
+      error: 'NOT_FOUND',
+      message: 'Ressource non trouvée'
+    });
+  });
+}
+
+// ============================================
+// GESTION DES ERREURS / ERROR HANDLING
+// ============================================
 
 // Gestionnaire d'erreurs global / Global error handler
 app.use((err, req, res, next) => {
